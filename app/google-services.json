@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "306776624751",
+    "project_id": "hcisleep",
+    "storage_bucket": "hcisleep.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:306776624751:android:59b7f87291b6bfd69c879a",
+        "android_client_info": {
+          "package_name": "com.example.hci_sleep"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCE2AzxvBbTjWxJQaf_WW0UGiERUYNFl2g"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
