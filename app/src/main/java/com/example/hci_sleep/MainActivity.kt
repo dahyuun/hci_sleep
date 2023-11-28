@@ -11,8 +11,17 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.hci_sleep.ui.theme.Hci_sleepTheme
-
+import android.Manifest
+import android.content.pm.PackageManager
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 class MainActivity : ComponentActivity() {
+
+    companion object {
+        const val PERMISSION_REQUEST_CODE = 101
+    }
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
@@ -26,6 +35,16 @@ class MainActivity : ComponentActivity() {
                 }
             }
         }
+
+        // check whether camera permission is granted and request if not
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA)
+            == PackageManager.PERMISSION_DENIED) {
+            ActivityCompat.requestPermissions(
+                this, arrayOf(Manifest.permission.CAMERA),
+                PERMISSION_REQUEST_CODE
+            )
+        }
+
     }
 }
 
