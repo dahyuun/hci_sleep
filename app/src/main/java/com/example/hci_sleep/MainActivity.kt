@@ -1,65 +1,73 @@
 package com.example.hci_sleep
 
+import android.Manifest
+import android.content.Intent
+import android.content.pm.PackageManager
+import android.os.Build
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
+import androidx.annotation.RequiresApi
+import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
-import com.example.hci_sleep.ui.theme.Hci_sleepTheme
-import android.Manifest
-import android.content.pm.PackageManager
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-class MainActivity : ComponentActivity() {
+import com.example.hci_sleep.ui.theme.Hci_sleepTheme
 
+
+class MainActivity : ComponentActivity() {
     companion object {
         const val PERMISSION_REQUEST_CODE = 101
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
+    private fun startCameraService() {
+        val intent = Intent(this, CameraService::class.java)
+        this.startForegroundService(intent)
+    }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+
         setContent {
             Hci_sleepTheme {
-                // A surface container using the 'background' color from the theme
-                Surface(
-                    modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colorScheme.background
-                ) {
-                    Greeting("Android")
-                }
+                StartCameraServiceButton(onClick = {
+                    startCameraService()
+                })
+//                StopCameraServiceButton(onClick = {
+//                    stopCameraService(this)
+//                })
             }
         }
 
         // check whether camera permission is granted and request if not
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA)
-            == PackageManager.PERMISSION_DENIED) {
+            == PackageManager.PERMISSION_DENIED
+        ) {
             ActivityCompat.requestPermissions(
                 this, arrayOf(Manifest.permission.CAMERA),
                 PERMISSION_REQUEST_CODE
             )
         }
 
+
+    }
+}
+
+
+@Composable
+fun StartCameraServiceButton(onClick: () -> Unit) {
+    Button(onClick = onClick) {
+        Text(text = "Start Camera Service")
     }
 }
 
 @Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
-}
-
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    Hci_sleepTheme {
-        Greeting("Android")
+fun StopCameraServiceButton(onClick: () -> Unit) {
+    Button(onClick = onClick) {
+        Text(text = "Stop Camera Service")
     }
 }

@@ -1,11 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
+
     <uses-permission android:name="android.permission.CAMERA" />
-    <uses-feature android:name="android.hardware.camera2.full"/>
+
+    <uses-feature android:name="android.hardware.camera2.full" />
     <uses-feature
         android:name="android.hardware.camera"
         android:required="false" />
+
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_CAMERA " />
+    <uses-permission android:name="android.permission.INTERNET" />
+
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
 
     <application
         android:allowBackup="true"
@@ -17,6 +25,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Hci_sleep"
         tools:targetApi="31">
+        <service
+            android:name=".CameraService"
+            android:enabled="true"
+            android:exported="true"
+            android:foregroundServiceType="camera"></service>
+
         <activity
             android:name=".MainActivity"
             android:exported="true"
@@ -28,11 +42,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <meta-data
             android:name="com.google.firebase.ml.vision.DEPENDENCIES"
             android:value="face" />
-        <!-- To use multiple models: android:value="face,model2,model3" -->
     </application>
-
 
 </manifest>
